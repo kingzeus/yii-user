@@ -181,19 +181,19 @@ class User extends CActiveRecord
     }
 
     public function getCreatetime() {
-        return strtotime($this->createtime);
+        return $this->createtime;
     }
 
     public function setCreatetime($value) {
-        $this->create_at=date('Y-m-d H:i:s',$value);
+        $this->createtime =$value;
     }
 
     public function getLastvisit() {
-        return strtotime($this->lastvisit_at);
+        return $this->lastvisit;
     }
 
     public function setLastvisit($value) {
-        $this->lastvisit_at=date('Y-m-d H:i:s',$value);
+        $this->lastvisit=$value;
     }
 
     public function afterSave() {
