@@ -21,28 +21,70 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		if (strpos($this->username,"@")) {
-			$user=User::model()->notsafe()->findByAttributes(array('email'=>$this->username));
-		} else {
-			$user=User::model()->notsafe()->findByAttributes(array('username'=>$this->username));
-		}
-		if($user===null)
-			if (strpos($this->username,"@")) {
-				$this->errorCode=self::ERROR_EMAIL_INVALID;
+		if(Yii::app()->getModule('user')->useUCenter)
+		{
+			//ucenter
+			Yii::import('user.vendor.*');
+			include_once 'ucenter.php';
+			//1:使用用户 ID登录
+			//2:使用用户 E-mail登录
+			//0:(默认值) 使用用户名登录
+			$isuid=0;
+			if (strpos($this->username,"@"))
+				$isuid=2;
+
+			list($uid, $username, $password, $email) = uc_user_login($this->username, $this->password,$isuid);
+			
+			if($uid > 0) {
+				
+				$user=User::model()->notsafe()->findByAttributes(array('username'=>$username));
+				if($user===null)
+					$this->errorCode=self::ERROR_STATUS_NOTACTIV;
+				else{
+					$this->_id=$user->id;
+					$this->username=$user->username;
+					$this->errorCode=self::ERROR_NONE;
+					
+					//生成同步登录的代码
+					$ucsynlogin = uc_user_synlogin($uid);
+				}
+			} elseif($uid == -1) {
+				if ($isuid==2) {
+					$this->errorCode=self::ERROR_EMAIL_INVALID;
+				} else {
+					$this->errorCode=self::ERROR_USERNAME_INVALID;
+				}
+			} elseif($uid == -2) {
+				$this->errorCode=self::ERROR_PASSWORD_INVALID;
 			} else {
-				$this->errorCode=self::ERROR_USERNAME_INVALID;
+				echo '未定义';
 			}
-		else if(Yii::app()->getModule('user')->encrypting($this->password)!==$user->password)
-			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-		else if($user->status==0&&Yii::app()->getModule('user')->loginNotActiv==false)
-			$this->errorCode=self::ERROR_STATUS_NOTACTIV;
-		else if($user->status==-1)
-			$this->errorCode=self::ERROR_STATUS_BAN;
-		else {
-			$this->_id=$user->id;
-			$this->username=$user->username;
-			$this->errorCode=self::ERROR_NONE;
+		}else{
+			if (strpos($this->username,"@")) {
+				$user=User::model()->notsafe()->findByAttributes(array('email'=>$this->username));
+			} else {
+				$user=User::model()->notsafe()->findByAttributes(array('username'=>$this->username));
+			}
+			if($user===null)
+				if (strpos($this->username,"@")) {
+					$this->errorCode=self::ERROR_EMAIL_INVALID;
+				} else {
+					$this->errorCode=self::ERROR_USERNAME_INVALID;
+				}
+			else if(Yii::app()->getModule('user')->encrypting($this->password)!==$user->password)
+					$this->errorCode=self::ERROR_PASSWORD_INVALID;
+			else if($user->status==0&&Yii::app()->getModule('user')->loginNotActiv==false)
+					$this->errorCode=self::ERROR_STATUS_NOTACTIV;
+			else if($user->status==-1)
+					$this->errorCode=self::ERROR_STATUS_BAN;
+			else {
+				$this->_id=$user->id;
+				$this->username=$user->username;
+				$this->errorCode=self::ERROR_NONE;
+			}
 		}
+		
+		
 		return !$this->errorCode;
 	}
     
