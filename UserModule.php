@@ -60,7 +60,8 @@ class UserModule extends CWebModule
 	public $returnUrl = array("/user/profile");
 	public $returnLogoutUrl = array("/user/login");
 	
-	
+	// 使用ucenter来管理用户
+	public $useUCenter = false;
 	/**
 	 * @var int
 	 * @desc Remember Me Time (seconds), defalt = 2592000 (30 days)
@@ -131,7 +132,20 @@ class UserModule extends CWebModule
             return array();
         }
 	}
-
+	public function getViewPath()
+	{
+		// 存在主题的话，去查看module有没有对应的
+		if(yii::app()->theme!==null)
+		{
+			$viewPath = dirname(__FILE__).DIRECTORY_SEPARATOR.'themes'.DIRECTORY_SEPARATOR.yii::app()->theme->name;
+			if(file_exists($viewPath))
+			{
+				return $viewPath.DIRECTORY_SEPARATOR.'views';
+			}
+		}
+		return parent::getViewPath();
+		
+	}
 	public function beforeControllerAction($controller, $action)
 	{
 		if(parent::beforeControllerAction($controller, $action))
