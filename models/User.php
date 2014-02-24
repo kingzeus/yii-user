@@ -57,8 +57,8 @@ class User extends CActiveRecord
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
 			array('superuser', 'in', 'range'=>array(0,1)),
-            array('createtime', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
-            array('lastvisit', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
+            array('createtime', 'default', 'value' => time(), 'setOnEmpty' => true, 'on' => 'insert'),
+            array('lastvisit', 'default', 'value' => 0, 'setOnEmpty' => true, 'on' => 'insert'),
 			array('username, email, superuser, status', 'required'),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, createtime, lastvisit, superuser, status', 'safe', 'on'=>'search'),
@@ -81,6 +81,22 @@ class User extends CActiveRecord
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
         return $relations;
+	}
+	protected function beforeValidate()
+	{
+		if ($this->isNewRecord)
+		{
+			// set the create date, last updated date
+			// and the user doing the creating            
+			$this->createtime = time();             
+			    
+		} else {            
+			//not a new record, so just set the last updated time            
+			//and last updated user id
+			// 在loginController中更新       
+			//$this->lastvisit = time();            
+		}
+	 	return parent::beforeValidate();
 	}
 
 	/**
