@@ -26,13 +26,13 @@
     </div>
 
     <div class="row">
-        <?php echo $form->label($model,'create_at'); ?>
-        <?php echo $form->textField($model,'create_at'); ?>
+        <?php echo $form->label($model,'createtime'); ?>
+        <?php echo $form->textField($model,'createtime'); ?>
     </div>
 
     <div class="row">
-        <?php echo $form->label($model,'lastvisit_at'); ?>
-        <?php echo $form->textField($model,'lastvisit_at'); ?>
+        <?php echo $form->label($model,'lastvisit'); ?>
+        <?php echo $form->textField($model,'lastvisit'); ?>
     </div>
 
     <div class="row">
