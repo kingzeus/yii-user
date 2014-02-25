@@ -62,6 +62,9 @@ class UserModule extends CWebModule
 	
 	// 使用ucenter来管理用户
 	public $useUCenter = false;
+	// 插件兼容（rights）
+	public $useExtRights = false;
+	
 	/**
 	 * @var int
 	 * @desc Remember Me Time (seconds), defalt = 2592000 (30 days)

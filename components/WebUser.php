@@ -43,9 +43,63 @@ class WebUser extends CWebUser
     protected function afterLogin($fromCookie)
 	{
         parent::afterLogin($fromCookie);
+        
+        if(Yii::app()->getModule('user')->useExtRights)
+        {
+        	// Mark the user as a superuser if necessary.
+        	if( Rights::getAuthorizer()->isSuperuser($this->getId())===true )
+        		$this->isSuperuser = true;
+        }
+        
         $this->updateSession();
 	}
 
+	public function checkAccess($operation, $params=array(), $allowCaching=true)
+	{
+		// Allow superusers access implicitly and do CWebUser::checkAccess for others.
+		return $this->isSuperuser===true ? true : parent::checkAccess($operation, $params, $allowCaching);
+	}
+	/**
+	 * @param boolean $value whether the user is a superuser.
+	 */
+	public function setIsSuperuser($value)
+	{
+		$this->setState('Rights_isSuperuser', $value);
+	}
+	
+	/**
+	 * @return boolean whether the user is a superuser.
+	 */
+	public function getIsSuperuser()
+	{
+		return $this->getState('Rights_isSuperuser');
+	}
+	
+	/**
+	 * @param array $value return url.
+	 */
+	public function setRightsReturnUrl($value)
+	{
+		$this->setState('Rights_returnUrl', $value);
+	}
+	
+	/**
+	 * Returns the URL that the user should be redirected to
+	 * after updating an authorization item.
+	 * @param string $defaultUrl the default return URL in case it was not set previously. If this is null,
+	 * the application entry URL will be considered as the default return URL.
+	 * @return string the URL that the user should be redirected to
+	 * after updating an authorization item.
+	 */
+	public function getRightsReturnUrl($defaultUrl=null)
+	{
+		if( ($returnUrl = $this->getState('Rights_returnUrl'))!==null )
+			$this->returnUrl = null;
+	
+		return $returnUrl!==null ? CHtml::normalizeUrl($returnUrl) : CHtml::normalizeUrl($defaultUrl);
+	}
+	
+	
     public function updateSession() {
         $user = Yii::app()->getModule('user')->user($this->id);
         $this->name = $user->username;
