@@ -64,6 +64,8 @@ class UserModule extends CWebModule
 	public $useUCenter = false;
 	// 插件兼容（rights）
 	public $useExtRights = false;
+	// 插件兼容（dwz）
+	public $useExtDwz = false;
 	
 	/**
 	 * @var int
@@ -122,10 +124,25 @@ class UserModule extends CWebModule
 		// you may place code here to customize the module or the application
 
 		// import the module-level models and components
-		$this->setImport(array(
+		$arrayImport= array(
 			'user.models.*',
 			'user.components.*',
-		));
+		);
+		
+		if($this->useExtDwz)
+		{
+			array_push($arrayImport, 'ext.dwz.*');
+			//配置dwz组件
+// 			Yii::app()->setComponents(array(
+// 			'clientScript'=>array(
+// 			'class'=>'ext.dwz.DClientScript',
+// 			),
+// 			));
+		}
+		
+		
+		
+		$this->setImport($arrayImport);
 	}
 	
 	public function getBehaviorsFor($componentName){
