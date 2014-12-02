@@ -4,13 +4,26 @@
 * (c) Alexander Listunov
 */
 return array(
+    //attribute
+    'Id' => '用户编号',
+    'username' => '用户名',
+    'password' => '密码',
+    'Retype Password' => '再次输入密码',
+    'E-mail' => '电子邮箱',
+    'Verification Code' => '验证码',
+    'activation key' => '激活码',
+    'Registration date' => '注册日期',
+    'Last visit' => '最后访问',
+    'Superuser' => '超级用户',
+    'Status' => '状态',
+    
 	'Registration' => '注册',
 	'Register' => '注册',
 	'Login' => '登录',
 	'Logout' => '注销',
-	'username' => '用户名',
+	
 	'username or email' => '用户名或者 email',
-	'password' => '密码',
+	
 	'Remember me next time' => '记住密码',
 	'Username is incorrect.' => '用户名不正确。',
 	'Email is incorrect.' => 'Email 不正确。',
@@ -21,9 +34,9 @@ return array(
 	'You account is not activated.' => '你的账户未激活。',
 	'You account is blocked.' => 'Ваш профіль заблоковано',
 	'Password is incorrect.' => '密码不正确',
-	'E-mail' => '电子邮箱',
-	'Verification Code' => '验证码',
-	'Retype Password' => '再次输入密码',
+	
+	
+	
 	'Retype Password is incorrect.' => '再次输入密码不正确',
 	'Incorrect password (minimal length 4 symbols).' => 'Мінімальна довжина паролю 4 символи',
 	'Incorrect username (length between 3 and 20 characters).' => 'Довжина імені користувача від 3 до 20 символів',
@@ -35,15 +48,15 @@ return array(
 	'Minimal password length 4 symbols.' => '密码最少 4 个字符。',
 	'Lost Password?' => '忘记密码',
 	'Profile' => '个人资料',
-	'activation key' => '激活码',
+	
 	'User activation' => '用户激活',
 	'You account is active.' => '你的帐号已激活',
 	'You account is activated.' => '你的帐号已激活',
 	'Incorrect activation URL.' => 'Неправильне посилання активації профілю',
-	'Registration date' => '注册日期',
-	'Last visit' => '最后访问',
-	'Superuser' => '超级用户',
-	'Status' => '状态',
+	
+	
+	
+	
 	'Ok' => 'Ok',
     'Show all'=> '显示全部',
 	'Save' => '保存',
@@ -62,8 +75,8 @@ return array(
 	'Already exists.' => '已经存在。',
 	'First Name' => '名字',
 	'Last Name' => '姓名',
-	'No' => 'Ні',
-	'Yes' => 'Так',
+	'No' => '否',
+	'Yes' => '是',
 	'Yes and show on registration form' => 'Так і показати при реєстрації',
 	'No, but show on registration form' => 'Ні, але показати при реєстрації',
 	'Not active' => '未激活',

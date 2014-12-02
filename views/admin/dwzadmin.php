@@ -24,7 +24,9 @@
 			'class'=>'DwzPager',
 			'showWrap'=>true,
 					),
+	
 	//'showToolbar'=>false,		// 是否显示工具条
+	//'showCheckbox'=>false,		// 是否显示多选框
 		'toolbar'=>array(
 				CHtml::link(CHtml::tag('span',array(),yii::t('admin','Create')),Yii::app()->controller->createUrl('create'),array('class'=>'add','target'=>'dialog')),
 				//CHtml::link(CHtml::tag('span',array(),yii::t('zii','Delete')),Yii::app()->controller->createUrl('delete',array('id'=>'{'.$model->getTableSchema()->primaryKey.'}')),array('class'=>'delete','target'=>'ajaxTodo','title'=>Yii::t('zii','Are you sure you want to delete this item?'))),
@@ -33,20 +35,32 @@
 				CHtml::link(CHtml::tag('span',array(),Yii::t('admin','Update')),Yii::app()->controller->createUrl('update',array('id'=>'{'.$model->getTableSchema()->primaryKey.'}')),array('class'=>'edit','target'=>'dialog')),
 				),
 	//'showOperationButton'=>false,		// 是否显示操作条
+	//'operationReadOnly'=>true,		// 只读模式
+	//'showSearchBar'=>false,		// 显示搜索条
 	'dataProvider' => $model->search($pager),
+	'showFilter'=>false,		// 显示过滤器
 	'filter' => $model,
+	//'enableSorting'=>false,		// 列排序
 	'columns' => array(
 		'id',
 		'username',
-		'password',
 		'email',
-		'activkey',
-		'createtime',
-		/*
-		'lastvisit',
-		'superuser',
-		'status',
-		*/
+	    array(
+	        'name'=>'createtime',
+	        'type' => 'date',
+	    ),
+	    array(
+	        'name'=>'lastvisit',
+	        'type' => 'date',
+	       ),
+	    array(
+	        'name'=>'superuser',
+	        'value'=>'$data->GetAdminStatus()',
+	    ),
+		array(
+		    'name'=>'status',
+		    'value'=>'$data->GetUserStatus()',
+		    ),
 	),
 )); ?>
 

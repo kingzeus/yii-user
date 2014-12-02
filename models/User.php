@@ -82,6 +82,10 @@ class User extends CActiveRecord
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
         return $relations;
 	}
+	public function primaryKey()
+	{
+	    return $this->getTableSchema()->primaryKey;
+	}
 	protected function beforeValidate()
 	{
 		if ($this->isNewRecord)
@@ -148,7 +152,14 @@ class User extends CActiveRecord
             'select' => 'user.id, user.username, user.email, user.createtime, user.lastvisit, user.superuser, user.status',
         ));
     }
-	
+    public function GetUserStatus()
+    {
+       return self::itemAlias('UserStatus',$this->status);
+    }
+    public function GetAdminStatus()
+    {
+        return self::itemAlias('AdminStatus',$this->superuser);
+    }
 	public static function itemAlias($type,$code=NULL) {
 		$_items = array(
 			'UserStatus' => array(

@@ -3,7 +3,6 @@
 class AdminController extends DwGxController {
 
 
-
 	public function actionCreate() {
 
         if(!DwzHelper::IsDwzAjaxRequest())
@@ -27,7 +26,6 @@ class AdminController extends DwGxController {
 	}
 
 	public function actionUpdate($id) {
-		
 		$model = $this->loadModel($id, 'User');
 
 
@@ -35,7 +33,9 @@ class AdminController extends DwGxController {
 			$model->setAttributes($_POST['User']);
 
 			if ($model->save()) {
+				
 				$this->dwzOk('更新完成！');
+
 			}else
 				$this->dwzError($model);
 
@@ -44,7 +44,6 @@ class AdminController extends DwGxController {
 		$this->render('dwzupdate', array(
 				'model' => $model,
 				));
-		
 	}
 
 	public function actionDelete($id=null) {
@@ -69,7 +68,7 @@ class AdminController extends DwGxController {
 	}
 
 
-	// 列出用户列表
+
 	public function actionAdmin() {
 		if(!DwzHelper::IsDwzAjaxRequest())
 			throw new CHttpException(405,Yii::t('yii','Your method is not allowed.'));
@@ -78,8 +77,8 @@ class AdminController extends DwGxController {
 		$model = new User('search');
 		$model->unsetAttributes();
 
-		if (isset($_GET['User']))
-			$model->setAttributes($_GET['User']);
+		if (isset($_POST['User']))
+			$model->setAttributes($_POST['User']);
 
 		$this->render('dwzadmin', array(
 			'model' => $model,
