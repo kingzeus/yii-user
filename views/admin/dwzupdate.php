@@ -13,7 +13,7 @@
 ?>
 
 
-	<div class="pageFormContent nowrap" layoutH="56">
+	<div class="pageFormContent" layoutH="56">
 
 		<dl>
 		<?php echo $form->labelEx($model,'username'); ?>

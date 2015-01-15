@@ -45,7 +45,16 @@ class AdminController extends DwGxController {
 				'model' => $model,
 				));
 	}
+	public function actionView($id) {
+		$model = $this->loadModel($id, 'User');
 
+
+
+
+		$this->render('dwzview', array(
+				'model' => $model,
+				));
+	}
 	public function actionDelete($id=null) {
 		if (Yii::app()->getRequest()->getIsPostRequest()) {
 			if($id===null&&isset($_POST['id']))

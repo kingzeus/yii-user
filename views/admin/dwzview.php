@@ -59,11 +59,5 @@
 	</div>
 
 
-<?php 
-	$this->widget('ext.dwz.DwzFormBar',array('buttons'=>array(
-		'创建'=>array('active'=>true,'type'=>'submit'),
-		'取消'=>array('class'=>'close'),
-	)));
-
-
-$this->endWidget(); ?></div><!-- form -->
+<?php $this->endWidget(); ?>
+</div><!-- form -->
