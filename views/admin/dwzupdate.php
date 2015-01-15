@@ -15,7 +15,7 @@
 
 	<div class="pageFormContent nowrap" layoutH="56">
 
-		<dl style='float: left;'>
+		<dl>
 		<?php echo $form->labelEx($model,'username'); ?>
 		<dd><?php echo $form->textField($model, 'username', array('maxlength' => 20)); ?>
 		<?php echo $form->info(); ?></dd>
