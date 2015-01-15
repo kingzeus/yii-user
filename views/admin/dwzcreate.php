@@ -35,16 +35,7 @@
 		<dd><?php echo $form->textField($model, 'activkey', array('maxlength' => 128)); ?>
 		<?php echo $form->info(); ?></dd>
 		</dl>
-		<dl>
-		<?php echo $form->labelEx($model,'createtime'); ?>
-		<dd><?php echo $form->textField($model, 'createtime'); ?>
-		<?php echo $form->info(); ?></dd>
-		</dl>
-		<dl>
-		<?php echo $form->labelEx($model,'lastvisit'); ?>
-		<dd><?php echo $form->textField($model, 'lastvisit'); ?>
-		<?php echo $form->info(); ?></dd>
-		</dl>
+
 		<dl>
 		<?php echo $form->labelEx($model,'superuser'); ?>
 		<dd><?php echo $form->textField($model, 'superuser'); ?>
