@@ -86,10 +86,7 @@ class User extends CActiveRecord
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
         return $relations;
 	}
-	public function primaryKey()
-	{
-	    return $this->getTableSchema()->primaryKey;
-	}
+
 	protected function beforeValidate()
 	{
 		if ($this->isNewRecord)
