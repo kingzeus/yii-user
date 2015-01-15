@@ -40,6 +40,10 @@ class User extends CActiveRecord
 	{
 		return Yii::app()->getModule('user')->tableUsers;
 	}
+	public function primaryKey()
+	{
+	    return $this->getTableSchema()->primaryKey;
+	}
 
 	/**
 	 * @return array validation rules for model attributes.

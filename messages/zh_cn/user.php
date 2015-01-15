@@ -129,7 +129,8 @@ return array(
     'Not visited' => '未访问',
 
     
-    
+    // 数据表
+    'Id'=>'用户编号',
     
     
     
